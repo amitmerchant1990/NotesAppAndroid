@@ -1,4 +1,4 @@
 NotesAppAndroid
 ===============
 
-Notes App Built In Android
+Take notes on the GO. :blush:
