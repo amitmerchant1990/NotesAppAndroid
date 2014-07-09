@@ -1,17 +1,20 @@
 package com.amitmerchant.notesapp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,22 +25,24 @@ public class MainActivity extends ActionBarActivity {
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
-	ListView lvList;
+	private ListView lvList;
 	EditText ed;
 	Button bt;
-
+	ArrayAdapter<String> adapter;
+	final ArrayList<String> list = new ArrayList<String>();
+	final DatabaseHandler db = new DatabaseHandler(this);
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		final DatabaseHandler db = new DatabaseHandler(this);
-		
 		ed = (EditText) findViewById(R.id.edt);
 		bt = (Button) findViewById(R.id.btn);
 		lvList = (ListView) findViewById(R.id.listView1);
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				getApplicationContext(), android.R.layout.simple_list_item_1);
+		registerForContextMenu(lvList);
+		adapter = new ArrayAdapter<String>(
+				getApplicationContext(), android.R.layout.simple_list_item_1,list);
 
 		List<Notes> note = db.getAllNotes(); 
 		
@@ -53,8 +58,8 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String str = ed.getText().toString();
-				if (str != null){
+				String str = ed.getText().toString().trim();
+				if (str.length() > 0|| !str.equals("")){
 					db.addNote(new Notes(str));
 					adapter.insert(str,0);
 					ed.setText("");
@@ -103,6 +108,30 @@ public class MainActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+	
+	@Override
+    public void onCreateContextMenu(ContextMenu menu, 
+                    View v, ContextMenuInfo menuInfo) {
+        menu.add(0, 1, 0, "Delete");
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+    	int position;
+        super.onContextItemSelected(item);
+
+        if(item.getTitle().equals("Delete")) {
+            //Add code
+        	AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();  
+            position = (int)info.id;  
+            //Notes note_id = (Notes)adapter.getNote(info.position);
+            db.deleteNote(new Notes(position));
+            list.remove(position);  
+            this.adapter.notifyDataSetChanged();  
+        }
+        return true;
+    };
 
 	/*
 	 * public void addNote(View v){

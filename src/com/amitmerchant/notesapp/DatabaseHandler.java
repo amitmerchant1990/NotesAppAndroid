@@ -14,7 +14,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "notesManager";
 	private static final String TABLE_NOTES = "notes";
 	
-	private static final String KEY_ID = "id";
+	private static final String KEY_ID = "_id";
     private static final String KEY_NOTE = "note";
     private static final String KEY_DATE = "date_added";
     
@@ -24,7 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     
     @Override
     public void onCreate(SQLiteDatabase db){
-    	String CREATE_NOTES_TABLE = "CREATE TABLE "+TABLE_NOTES+"("+KEY_ID+" INTEGER PRIMARY KEY,"+KEY_NOTE+" TEXT,"+KEY_DATE+" DATE"+")";
+    	String CREATE_NOTES_TABLE = "CREATE TABLE "+TABLE_NOTES+"("+KEY_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+KEY_NOTE+" TEXT,"+KEY_DATE+" DATE"+")";
     	db.execSQL(CREATE_NOTES_TABLE);
     }
     
