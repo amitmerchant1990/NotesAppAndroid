@@ -12,8 +12,8 @@ Things I've used so far
 * Context Menu
 * CRUD Operations (still in progress)
 
-Further improvements:
-=====================
+Further improvements
+====================
 
 * Custom ListViews
 * Copy to clipboard feature
