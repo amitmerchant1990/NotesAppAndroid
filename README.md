@@ -3,7 +3,7 @@ NotesAppAndroid
 
 Take notes on the GO. :blush:
 
-- An application I'm trying to build to learn some of(if not most) the aspects of android application developement. I'll try to learn most out of it.
+- An application through which I'm trying to learn some of(if not most) the aspects of Android application developement. I'll try to learn most out of it.
 
 Things I've used so far
 =======================
