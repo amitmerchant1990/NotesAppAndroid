@@ -2,7 +2,11 @@ package com.amitmerchant.notesapp;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.ClipData;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -15,12 +19,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class MainActivity extends ActionBarActivity {
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
@@ -63,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
 					db.addNote(new Notes(str));
 					adapter.insert(str,0);
 					ed.setText("");
-					Toast.makeText(getApplicationContext(), "successfully added",
+					Toast.makeText(getApplicationContext(), "Note added successfully.",
 					Toast.LENGTH_SHORT).show();
 					adapter.notifyDataSetChanged();
 				}
@@ -113,10 +120,13 @@ public class MainActivity extends ActionBarActivity {
     public void onCreateContextMenu(ContextMenu menu, 
                     View v, ContextMenuInfo menuInfo) {
         menu.add(0, 1, 0, "Delete");
+        menu.add(0, 2, 1, "Copy Note");
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
-    @Override
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@SuppressLint("NewApi")
+	@Override
     public boolean onContextItemSelected(MenuItem item) {
     	int position;
         super.onContextItemSelected(item);
@@ -127,8 +137,24 @@ public class MainActivity extends ActionBarActivity {
             position = (int)info.id;  
             //Notes note_id = (Notes)adapter.getNote(info.position);
             db.deleteNote(new Notes(position));
+            
             list.remove(position);  
             this.adapter.notifyDataSetChanged();  
+        }else if(item.getTitle().equals("Copy Note")){ // Added copy to clip board support
+        	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+            String textTocopy = ((TextView) info.targetView).getText().toString();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE); 
+                ClipData clip = ClipData.newPlainText("simple text",textTocopy);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Copied.",
+    					Toast.LENGTH_SHORT).show();
+            }else{
+                android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setText(textTocopy);
+
+            }
+
         }
         return true;
     };
