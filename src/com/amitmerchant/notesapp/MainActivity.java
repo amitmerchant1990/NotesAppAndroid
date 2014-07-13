@@ -1,11 +1,13 @@
 package com.amitmerchant.notesapp;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,10 +22,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,32 +39,42 @@ public class MainActivity extends ActionBarActivity {
 	private ListView lvList;
 	EditText ed;
 	Button bt;
-	ArrayAdapter<String> adapter;
-	final ArrayList<String> list = new ArrayList<String>();
 	final DatabaseHandler db = new DatabaseHandler(this);
+	SQLController dbcon;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		ed = (EditText) findViewById(R.id.edt);
+		dbcon = new SQLController(this);
+		dbcon.open();
+		
 		bt = (Button) findViewById(R.id.btn);
 		lvList = (ListView) findViewById(R.id.listView1);
 		registerForContextMenu(lvList);
-		adapter = new ArrayAdapter<String>(
-				getApplicationContext(), android.R.layout.simple_list_item_1,list);
-
-		List<Notes> note = db.getAllNotes(); 
-		
-		for (Notes cn : note) {
-            String note_text = cn.getNote();
-                // Writing Contacts to log
-            adapter.insert(note_text,0);
-            adapter.notifyDataSetChanged();
-        }
 		
 		bt.setOnClickListener(new OnClickListener() {
+		       
+		            @Override
+		            public void onClick(View v) {
+		                   Intent add_note = new Intent(MainActivity.this, Add_note.class);
+		                   startActivity(add_note);
+		           }
+		 });
+
+		
+		Cursor cursor = dbcon.readNote();
+        String[] from = new String[] { DatabaseHandler.KEY_ID, DatabaseHandler.KEY_NOTE };
+        int[] to = new int[] { R.id.note_id, R.id.note_text };
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.view_note_entry, cursor, from, to);
+
+        adapter.notifyDataSetChanged();
+        lvList.setAdapter(adapter);
+
+		
+		/*bt.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -76,7 +90,26 @@ public class MainActivity extends ActionBarActivity {
 				}
 			}
 		});
-		lvList.setAdapter(adapter);
+		lvList.setAdapter(adapter);*/
+     // OnCLickListiner For List Items
+        lvList.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                TextView note_id = (TextView) view.findViewById(R.id.note_id);
+                TextView note_text = (TextView) view.findViewById(R.id.note_text);
+
+                String note_id_val = note_id.getText().toString();
+                String note_text_val = note_text.getText().toString();
+
+                Intent modify_intent = new Intent(getApplicationContext(),
+                        Modify_note.class);
+                modify_intent.putExtra("noteText", note_text_val);
+                modify_intent.putExtra("noteID", note_id_val);
+                startActivity(modify_intent);
+            }
+        });
+
 	}
 
 	@Override
@@ -124,7 +157,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	/*@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@SuppressLint("NewApi")
 	@Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -157,7 +190,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
         return true;
-    };
+    };*/
 
 	/*
 	 * public void addNote(View v){
