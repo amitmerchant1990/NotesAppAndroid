@@ -15,6 +15,7 @@ Things I've used so far
 Further improvements
 ====================
 
+* Usage of cursor adapters
 * Custom ListViews
 * Copy to clipboard feature
 * Update Note feature
