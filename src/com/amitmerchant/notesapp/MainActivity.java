@@ -41,6 +41,8 @@ public class MainActivity extends ActionBarActivity {
 	Button bt;
 	final DatabaseHandler db = new DatabaseHandler(this);
 	SQLController dbcon;
+	SimpleCursorAdapter adapter;
+	Cursor cursor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +66,11 @@ public class MainActivity extends ActionBarActivity {
 		 });
 
 		
-		Cursor cursor = dbcon.readNote();
+		cursor = dbcon.readNote();
         String[] from = new String[] { DatabaseHandler.KEY_ID, DatabaseHandler.KEY_NOTE };
         int[] to = new int[] { R.id.note_id, R.id.note_text };
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.view_note_entry, cursor, from, to);
+        adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.view_note_entry, cursor, from, to);
 
         adapter.notifyDataSetChanged();
         lvList.setAdapter(adapter);
@@ -152,12 +154,13 @@ public class MainActivity extends ActionBarActivity {
 	@Override
     public void onCreateContextMenu(ContextMenu menu, 
                     View v, ContextMenuInfo menuInfo) {
+		menu.setHeaderTitle("Choose Action");   // Context-menu title
         menu.add(0, 1, 0, "Delete");
         menu.add(0, 2, 1, "Copy Note");
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
-	/*@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@SuppressLint("NewApi")
 	@Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -169,13 +172,12 @@ public class MainActivity extends ActionBarActivity {
         	AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();  
             position = (int)info.id;  
             //Notes note_id = (Notes)adapter.getNote(info.position);
-            db.deleteNote(new Notes(position));
-            
-            list.remove(position);  
-            this.adapter.notifyDataSetChanged();  
+            dbcon.deleteNote(new Notes(info.position));
+            adapter.notifyDataSetChanged();  
         }else if(item.getTitle().equals("Copy Note")){ // Added copy to clip board support
         	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-            String textTocopy = ((TextView) info.targetView).getText().toString();
+            TextView textView = (TextView) (info.targetView).findViewById(R.id.note_text);
+            String textTocopy = (String)textView.getText().toString();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE); 
                 ClipData clip = ClipData.newPlainText("simple text",textTocopy);
@@ -185,12 +187,13 @@ public class MainActivity extends ActionBarActivity {
             }else{
                 android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.setText(textTocopy);
-
+                Toast.makeText(getApplicationContext(), "Copied.",
+    					Toast.LENGTH_SHORT).show();	
             }
 
         }
         return true;
-    };*/
+    };
 
 	/*
 	 * public void addNote(View v){
