@@ -22,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="Add_note"></activity>
-        <activity android:name="Modify_note"></activity>
+        <activity android:name="Add_note" android:label="Add Note"></activity>
+        <activity android:name="Modify_note" android:label="Update Note"></activity>
     </application>
 
 </manifest>
