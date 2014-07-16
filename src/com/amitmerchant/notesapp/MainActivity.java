@@ -1,11 +1,11 @@
 package com.amitmerchant.notesapp;
 
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -43,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
 	SQLController dbcon;
 	SimpleCursorAdapter adapter;
 	Cursor cursor;
+	int position = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class MainActivity extends ActionBarActivity {
         adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.view_note_entry, cursor, from, to);
 
         adapter.notifyDataSetChanged();
+        lvList.setEmptyView(findViewById(android.R.id.empty));
         lvList.setAdapter(adapter);
 
 		
@@ -164,16 +165,48 @@ public class MainActivity extends ActionBarActivity {
 	@SuppressLint("NewApi")
 	@Override
     public boolean onContextItemSelected(MenuItem item) {
-    	int position;
+    	
         super.onContextItemSelected(item);
 
         if(item.getTitle().equals("Delete")) {
-            //Add code
-        	AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();  
-            position = (int)info.id;  
-            //Notes note_id = (Notes)adapter.getNote(info.position);
-            dbcon.deleteNote(new Notes(info.position));
-            adapter.notifyDataSetChanged();  
+        	final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+			 
+	        // Setting Dialog Title
+	        alertDialog.setTitle("Delete");
+	 
+	        // Setting Dialog Message
+	        alertDialog.setMessage("Are you sure you want delete this note?");
+	 
+	        // Setting Icon to Dialog
+	        //alertDialog.setIcon(R.drawable.delete);
+	 
+	        // Setting Positive "Yes" Button
+	        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog,int which) {
+	            	//Add code
+	            	position = (int)info.id;  
+	                //Notes note_id = (Notes)adapter.getNote(info.position);
+	                dbcon.deleteNote(new Notes(position));
+	                cursor.requery();	
+		            // Write your code here to invoke YES event
+		            Toast.makeText(getApplicationContext(), "Note deleted successfully.", Toast.LENGTH_SHORT).show();
+	            }
+	        });
+	 
+	        // Setting Negative "NO" Button
+	        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int which) {
+	            // Write your code here to invoke NO event
+	            dialog.cancel();
+	            }
+	        });
+	 
+	        // Showing Alert Message
+	        alertDialog.show();
+            
+            //this.adapter.notifyDataSetChanged();  
         }else if(item.getTitle().equals("Copy Note")){ // Added copy to clip board support
         	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
             TextView textView = (TextView) (info.targetView).findViewById(R.id.note_text);
