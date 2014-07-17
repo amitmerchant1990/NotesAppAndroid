@@ -50,9 +50,11 @@ public class Modify_note extends Activity implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.update_bt_id:
-			String note_update = et.getText().toString();
-			dbcon.updateNote(new Notes(note_id, note_update));
-			this.returnHome();
+			String note_update = et.getText().toString().trim();
+			if (note_update.length() > 0 || !note_update.equals("")) {
+				dbcon.updateNote(new Notes(note_id, note_update));
+				this.returnHome();
+			}
 			break;
 
 		case R.id.delete_bt_id:

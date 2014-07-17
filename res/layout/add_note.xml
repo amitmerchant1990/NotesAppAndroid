@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp" >
+    android:padding="20dp"
+    android:background="#E9CFEC" >
 
     <EditText
         android:id="@+id/member_et_id"
@@ -19,8 +20,8 @@
 
     <Button
         android:id="@+id/add_bt_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:text="ADD" />
 

@@ -65,7 +65,6 @@ public class MainActivity extends ActionBarActivity {
 		           }
 		 });
 
-		
 		cursor = dbcon.readNote();
         String[] from = new String[] { DatabaseHandler.KEY_ID, DatabaseHandler.KEY_NOTE };
         int[] to = new int[] { R.id.note_id, R.id.note_text };
@@ -75,25 +74,7 @@ public class MainActivity extends ActionBarActivity {
         adapter.notifyDataSetChanged();
         lvList.setEmptyView(findViewById(android.R.id.empty));
         lvList.setAdapter(adapter);
-
 		
-		/*bt.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				String str = ed.getText().toString().trim();
-				if (str.length() > 0|| !str.equals("")){
-					db.addNote(new Notes(str));
-					adapter.insert(str,0);
-					ed.setText("");
-					Toast.makeText(getApplicationContext(), "Note added successfully.",
-					Toast.LENGTH_SHORT).show();
-					adapter.notifyDataSetChanged();
-				}
-			}
-		});
-		lvList.setAdapter(adapter);*/
      // OnCLickListiner For List Items
         lvList.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -225,18 +206,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
         }
-        return true;
-    };
-
-	/*
-	 * public void addNote(View v){
-	 * 
-	 * /*AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this)
-	 * .setTitle("SHOW FIELDS") .setMessage(note_text)
-	 * .setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
-	 * public void onClick(DialogInterface dialog, int which) { // do nothing
-	 * closeContextMenu(); } }); alert.show();
-	 * 
-	 * }
-	 */
+		return true;
+	};
+	
 }
