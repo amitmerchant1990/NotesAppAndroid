@@ -997,7 +997,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050046;
+        public static final int action_settings=0x7f050047;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int add_bt_id=0x7f050040;
         public static final int always=0x7f05000b;
@@ -1029,8 +1029,9 @@ containing a value of this type.
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
+        public static final int note_date=0x7f050045;
         public static final int note_id=0x7f050044;
-        public static final int note_text=0x7f050045;
+        public static final int note_text=0x7f050046;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;

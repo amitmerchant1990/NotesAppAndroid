@@ -13,6 +13,20 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/note_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textAlignment="gravity"
+        android:paddingRight="4dp"
+        android:textStyle="italic|bold"/>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="#808080" />
+    <TextView
         android:id="@+id/note_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

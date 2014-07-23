@@ -41,9 +41,9 @@ public class SQLController {
      
     // Getting single contact
     public Cursor readNote() {
-    	String[] allColumns = new String[]{dbhelper.KEY_ID, dbhelper.KEY_NOTE};
+    	String[] allColumns = new String[]{dbhelper.KEY_ID, dbhelper.KEY_NOTE, dbhelper.KEY_DATE};
     	
-    	Cursor c = database.query(dbhelper.TABLE_NOTES, allColumns,null,null,null,null,null);
+    	Cursor c = database.query(dbhelper.TABLE_NOTES, allColumns,null,null,null,null,dbhelper.KEY_DATE+" DESC");
     	
         if (c != null)
             c.moveToFirst();

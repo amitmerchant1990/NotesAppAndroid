@@ -39,7 +39,7 @@ public class Modify_note extends Activity implements OnClickListener {
 		note_id = Integer.parseInt(noteID);
 
 		et.setText(noteText);
-
+		et.setSelection(et.getText().length());
 		edit_bt.setOnClickListener(this);
 		delete_bt.setOnClickListener(this);
 

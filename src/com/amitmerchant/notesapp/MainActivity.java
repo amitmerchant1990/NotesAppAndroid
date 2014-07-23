@@ -1,5 +1,10 @@
 package com.amitmerchant.notesapp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -27,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
 	SimpleCursorAdapter adapter;
 	Cursor cursor;
 	int position = 0;
+	String finalDateText = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +73,34 @@ public class MainActivity extends ActionBarActivity {
 		 });
 
 		cursor = dbcon.readNote();
-        String[] from = new String[] { DatabaseHandler.KEY_ID, DatabaseHandler.KEY_NOTE };
-        int[] to = new int[] { R.id.note_id, R.id.note_text };
+        String[] from = new String[] { DatabaseHandler.KEY_ID, DatabaseHandler.KEY_NOTE, DatabaseHandler.KEY_DATE };
+        int[] to = new int[] { R.id.note_id, R.id.note_text, R.id.note_date };
 
         adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.view_note_entry, cursor, from, to);
 
+        adapter.setViewBinder(new ViewBinder(){
+        	public boolean setViewValue(View aView, Cursor aCursor, int aColumnIndex) {
+
+                if (aColumnIndex == aCursor.getColumnIndex(DatabaseHandler.KEY_DATE)) {
+                        String createDate = (String)aCursor.getString(aCursor.getColumnIndex(DatabaseHandler.KEY_DATE));
+                        TextView textView = (TextView) aView;
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                        Date finalDate;
+                        
+                        try {
+                        	finalDate = (Date)formatter.parse(createDate);
+                    		finalDateText = (String)formatter.format(finalDate);
+                    	} catch (ParseException e) {
+                    		e.printStackTrace();
+                    	}
+                        textView.setText(finalDateText);
+                        return true;
+                 }
+
+                 return false;
+            }
+        });
+        
         adapter.notifyDataSetChanged();
         lvList.setEmptyView(findViewById(android.R.id.empty));
         lvList.setAdapter(adapter);

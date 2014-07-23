@@ -24,7 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     
     @Override
     public void onCreate(SQLiteDatabase db){
-    	String CREATE_NOTES_TABLE = "CREATE TABLE "+TABLE_NOTES+"("+KEY_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+KEY_NOTE+" TEXT,"+KEY_DATE+" DATE"+")";
+    	String CREATE_NOTES_TABLE = "CREATE TABLE "+TABLE_NOTES+"("+KEY_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+KEY_NOTE+" TEXT,"+KEY_DATE+" DATETIME DEFAULT CURRENT_TIMESTAMP"+")";
     	db.execSQL(CREATE_NOTES_TABLE);
     }
     
