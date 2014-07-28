@@ -34,6 +34,10 @@ public class SQLController {
     	
     	ContentValues values = new ContentValues();
         values.put(dbhelper.KEY_NOTE, note.getNote()); // Contact Name
+        if(note.getReminderStatus()==true){
+        	values.put(dbhelper.KEY_IS_REMINDER,1);
+        }
+        values.put(dbhelper.KEY_REMINDER_DATE, note.getReminderDate().getTime());
            // Inserting Row
         database.insert(dbhelper.TABLE_NOTES, null, values);
         database.close(); // Closing database connection
@@ -41,7 +45,7 @@ public class SQLController {
      
     // Getting single contact
     public Cursor readNote() {
-    	String[] allColumns = new String[]{dbhelper.KEY_ID, dbhelper.KEY_NOTE, dbhelper.KEY_DATE};
+    	String[] allColumns = new String[]{dbhelper.KEY_ID, dbhelper.KEY_NOTE, dbhelper.KEY_DATE, dbhelper.KEY_IS_REMINDER};
     	
     	Cursor c = database.query(dbhelper.TABLE_NOTES, allColumns,null,null,null,null,dbhelper.KEY_DATE+" DESC");
     	
@@ -100,6 +104,11 @@ public class SQLController {
     public void deleteNote(Notes note) {
     	database.delete(dbhelper.TABLE_NOTES, dbhelper.KEY_ID + "="
                 + note.getId(), null);
+    }
+    
+    public Cursor getAllNotesReminder(){
+    	String[] allColumns = new String[]{dbhelper.KEY_ID, dbhelper.KEY_NOTE, dbhelper.KEY_DATE, dbhelper.KEY_IS_REMINDER, dbhelper.KEY_REMINDER_DATE};
+    	return database.query(dbhelper.TABLE_NOTES, allColumns,null,null,null,null,null);
     }
 
 }

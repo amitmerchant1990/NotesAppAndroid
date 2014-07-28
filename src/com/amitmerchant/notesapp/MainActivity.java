@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -47,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
 	final DatabaseHandler db = new DatabaseHandler(this);
 	SQLController dbcon;
 	SimpleCursorAdapter adapter;
-	Cursor cursor;
+	Cursor cursor, cursorReminder;
 	int position = 0;
 	String finalDateText = null;
 	
@@ -84,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
                 if (aColumnIndex == aCursor.getColumnIndex(DatabaseHandler.KEY_DATE)) {
                         String createDate = (String)aCursor.getString(aCursor.getColumnIndex(DatabaseHandler.KEY_DATE));
                         TextView textView = (TextView) aView;
-                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         Date finalDate;
                         
                         try {
@@ -123,7 +124,7 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(modify_intent);
             }
         });
-
+        
 	}
 
 	@Override

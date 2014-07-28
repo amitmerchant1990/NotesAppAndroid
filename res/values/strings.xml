@@ -7,5 +7,5 @@
     <string name="add_note">Type your note</string>
     <string name="add_note_btn">Add</string>
     <string name="title_activity_display_message">My Message</string>
-
+	<string name="set_reminder">Set reminder for this note</string>
 </resources>

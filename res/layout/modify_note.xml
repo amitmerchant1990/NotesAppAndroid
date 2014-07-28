@@ -1,36 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<RelativeLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:padding="20dp"
-    android:background="#E9CFEC">
+    android:padding="5dp"
+    android:background="#FEFFE1">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/linearLayoutThatDoesNotScrollEdit" >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center" >
+        
 
-    <EditText
-        android:id="@+id/edit_note_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="10" />
+		    <EditText
+		        android:id="@+id/edit_note_id"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="10dp"
+		        android:ems="10" />
+		    <CheckBox
+		        android:id="@+id/setReminderEdit"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textStyle="italic"
+		        android:text="@string/set_reminder" />
+			            <LinearLayout
+                android:id="@+id/linearLayoutEdit1"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/member_et_id"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true" >
 
+                <DatePicker
+                    android:id="@+id/datePickerEdit1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:calendarViewShown="false" >
+                </DatePicker>
+
+                <TimePicker
+                    android:id="@+id/timePickerEdit1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+                </TimePicker>
+            </LinearLayout>
+		    
+	    </LinearLayout>
+	</ScrollView>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" 
-        android:gravity="center_horizontal">
-
-        <Button
-            android:id="@+id/update_bt_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Update" />
-
-        <Button
-            android:id="@+id/delete_bt_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete" />
-    </LinearLayout>
-
-</LinearLayout>
+        android:id="@+id/linearLayoutThatDoesNotScrollEdit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+		     >
+		
+		        <Button
+		            android:id="@+id/update_bt_id"
+		            android:layout_width="fill_parent"
+		            android:layout_height="50dp"
+		            android:layout_weight="50"
+		            android:background="@drawable/add_note_btn"
+		            android:textColor="#FFFFFF"
+			        android:textStyle="bold"
+			        android:layout_marginRight="1dp"
+		            android:text="Update" />
+		
+		        <Button
+		            android:id="@+id/delete_bt_id"
+		            android:layout_width="fill_parent"
+		            android:layout_height="50dp"
+		            android:layout_weight="50"
+		            android:background="@drawable/delete_note_btn"
+		            android:textColor="#FFFFFF"
+			        android:textStyle="bold"
+			        android:layout_marginLeft="1dp"
+		            android:text="Delete" />
+		    </LinearLayout>
+</RelativeLayout>

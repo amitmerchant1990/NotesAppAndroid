@@ -24,6 +24,11 @@
         </activity>
         <activity android:name="Add_note" android:label="Add Note"></activity>
         <activity android:name="Modify_note" android:label="Update Note"></activity>
+        
+        <service android:name=".MyAlarmService"
+                 android:enabled="true" />
+         
+        <receiver android:name=".MyReceiver"/>
     </application>
 
 </manifest>

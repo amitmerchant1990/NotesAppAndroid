@@ -1,28 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#FEFFE1"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:background="#E9CFEC" >
+    android:padding="5dp" >
 
-    <EditText
-        android:id="@+id/member_et_id"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/linearLayoutThatDoesNotScroll" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center" >
+
+            <EditText
+                android:id="@+id/member_et_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Type in your note..." >
+
+                <requestFocus />
+            </EditText>
+            <CheckBox
+		        android:id="@+id/setReminder"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textStyle="italic"
+		        android:text="@string/set_reminder" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/member_et_id"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true" >
+
+                <DatePicker
+                    android:id="@+id/datePicker1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:calendarViewShown="false" >
+                </DatePicker>
+
+                <TimePicker
+                    android:id="@+id/timePicker1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+                </TimePicker>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutThatDoesNotScroll"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:ems="10" 
-        android:layout_marginTop="40dp"
-        android:hint="Type in your note...">
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        >
 
-        <requestFocus />
-    </EditText>
+        <Button
+            android:id="@+id/add_bt_id"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|center"
+            android:background="@drawable/add_note_btn"
+            android:text="Add"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/add_bt_id"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:text="ADD" />
-
-</LinearLayout>
+</RelativeLayout>
