@@ -24,7 +24,7 @@ Further improvements
 * Delete multiple Notes at a time
 * Creating a splash screen
 * Updating alarm manager
-* Creating prefersnce screen
+* Creating preference screen
 
 Licence
 =======
