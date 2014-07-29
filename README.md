@@ -11,7 +11,7 @@ Things I've used so far
 * SQLite Database Handler
 * Context Menu
 * CRUD Operations (still in progress)
-* PendingIntents,AlarmManager and Notification classes to implement reminders
+* PendingIntents, AlarmManager and Notification classes to implement reminders
 * Date and Time spinners
 
 Further improvements
