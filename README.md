@@ -11,16 +11,20 @@ Things I've used so far
 * SQLite Database Handler
 * Context Menu
 * CRUD Operations (still in progress)
+* PendingIntents,AlarmManager and Notification classes to implement reminders
+* Date and Time spinners
 
 Further improvements
 ====================
 
-* Usage of cursor adapters
-* Custom ListViews
-* Copy to clipboard feature
-* Update Note feature
+* ~~Usage of cursor adapters~~
+* ~~Custom ListViews~~
+* ~~Copy to clipboard feature~~
+* ~~Update Note feature~~
 * Delete multiple Notes at a time
 * Creating a splash screen
+* Updating alarm manager
+* Creating prefersnce screen
 
 Licence
 =======
