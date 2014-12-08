@@ -23,7 +23,7 @@ Further improvements
 * ~~Update Note feature~~
 * Delete multiple Notes at a time
 * Creating a splash screen
-* Updating alarm manager
+* ~~Updating alarm manager~~
 * Creating preference screen
 
 Licence
