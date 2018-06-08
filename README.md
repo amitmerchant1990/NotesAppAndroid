@@ -10,7 +10,7 @@ Things I've used so far
 * ListViews
 * SQLite Database Handler
 * Context Menu
-* CRUD Operations (still in progress)
+* CRUD Operations
 * PendingIntents, AlarmManager and Notification classes to implement reminders
 * Date and Time spinners
 
