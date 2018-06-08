@@ -5,6 +5,8 @@ Take notes on the GO. :blush:
 
 - An application through which I'm trying to learn some of(if not most) the aspects of Android application developement. I'll try to learn most out of it.
 
+Check it out on [Play Store](https://play.google.com/store/apps/details?id=com.amitmerchant.notesapp).
+
 Things I've used so far
 =======================
 * ListViews
